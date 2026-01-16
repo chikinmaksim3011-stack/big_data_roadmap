@@ -1,0 +1,30 @@
+Group A: 10,000 users, 850 purchases
+Group B: 10,000 users, 920 purchases
+→ Calculate the conversion rate (%) for each group.
+→ What is the absolute lift in percentage points?
+→ What is the relative lift (as a % increase vs. Group A)?
+
+1. А-group - 8,5%
+   B-group - 9,2%
+   Absolute lift in percentage points is 0,7 p.p.
+   Relative lift is (9,2-8,5) / 8,5 = 0,082 = 8,2%
+
+You receive test results:
+Group A conversion: 8.5%
+Group B conversion: 9.2%
+p-value = 0.03
+→ Should the company launch the new version? Why or why not?
+→ How would you summarize this in a report to a product manager?
+
+2. The company should launch the new version, because p-value show us that results were not get casually.
+We say to a product manager that our A/B test was get positive results and our innovation increased by 8,2% than old version.
+
+Propose a realistic A/B test for a food delivery app:
+What is being tested? (e.g., button text, page layout, notification timing)
+What metric are you trying to improve? (e.g., conversion, average order value, retention)
+State the null hypothesis (H₀) and alternative hypothesis (H₁).
+
+3. So, we're want to the place discounts under the buttons of restaurants and products.
+   We're want to increase retention and retention rate.
+   The null hypothesis is a feature that our decision will not affect customer behavior.
+   The alternative hypothesis is a feature that our users will be return for more orders.

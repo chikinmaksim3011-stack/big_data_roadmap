@@ -1,0 +1,31 @@
+# Find summary orders where time more average time
+SELECT COUNT(order_id) as count_orders
+FROM orders
+WHERE creation_time::time > (SELECT AVG(creation_time::time) FROM orders)  # So, we find all meaning, when time > average time in an all table. This is O(n) algorithm.
+AND order_id NOT IN (SELECT order_id FROM user_actions WHERE action = 'cancel_order') # This algorithm is O(k), when k - count cancel orders. All our algorithm is O(n+k). It may be lead to O(n^2) algorithm and it's not good for speed. It is recommended to replace with LEFT JOIN ... IS NULL to reduce the complexity to linear O(n+m).
+# All our SQL is O(n^2)
+
+# Find funded amount from our database
+WITH datetime AS
+(SELECT creation_time::DATE as dt, COUNT(order_id) as count_orders
+FROM orders
+WHERE order_id NOT IN (SELECT order_id FROM user_actions WHERE action = 'cancel_order') # This algorithm is O(n*k), when k - count cancel orders. It may be lead to O(n^2) algorithm and it's not good for speed. It is recommended to replace with LEFT JOIN ... IS NULL to reduce the complexity to linear O(n+m)
+GROUP BY dt # This algorithm is O(n log n) because it's our sorting.)
+SELECT dt, SUM(count_orders) OVER(ORDER BY dt) as funded_amount  # This algorithm is O(d log d) = 0(1), because we're getting the last result, and then we're sorting.
+FROM datetime
+# All our SQL is O(n^2)
+
+# Find couriers, which creating more than 50 orders
+
+WITH couriers AS
+(SELECT courier_id, COUNT(order_id) as orders
+FROM courier_actions
+WHERE order_id NOT IN (SELECT order_id FROM user_actions WHERE action = 'cancel_order') # This algorithm is O(n*k), when k - count cancel orders. It may be lead to O(n^2) algorithm and it's not good for speed. It is recommended to replace with LEFT JOIN ... IS NULL to reduce the complexity to linear O(n+m)
+GROUP BY courier_id
+ORDER BY courier_id # This algorithm is O(n) because it's our grouping and sorting.)
+SELECT courier_id, orders
+FROM couriers
+WHERE orders >= 50  # This algorithm is O(n) because our request using index, and we're doing a complete bust.
+ORDER BY orders DESC # This algorithm is O(n log n) because it's our sorting.
+
+# All our SQL is O(n^2)
