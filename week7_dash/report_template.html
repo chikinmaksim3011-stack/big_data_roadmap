@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Аналитический отчёт</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { text-align: center; }
+        .kpi { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .graph { margin: 40px 0; }
+    </style>
+</head>
+<body>
+    <h1>Еженедельный аналитический отчёт</h1>
+
+    <div class="kpi">
+        <p><strong>Средний DAU:</strong> {{ avg_dau }}</p>
+        <p><strong>Средняя выручка на пользователя:</strong> {{ avg_revenue }} ₽</p>
+    </div>
+
+    <div class="graph">
+        {{ dau_graph|safe }}
+    </div>
+
+    <div class="graph">
+        {{ revenue_graph|safe }}
+    </div>
+</body>
+</html>
